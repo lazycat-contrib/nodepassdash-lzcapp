@@ -1,0 +1,25 @@
+zc-sdk-version: "0.1"
+name: NodePassDash
+package: lazycat.community.app.nodepassdash
+version: 1.4.6
+description: 一个现代化的NodePass管理界面
+homepage: https://github.com/NodePassProject/NodePassDash
+author: NodePassProject
+application:
+    subdomain: nodepassdash
+    background_task: true
+    public_path:
+        - /
+    routes:
+        - /=http://nodepassdash:3000/
+services:
+    nodepassdash:
+        image: registry.lazycat.cloud/czyt/nodepassproject/nodepassdash:8849e47ae3196e65
+        binds:
+            - /lzcapp/var/config:/app/config
+            - /lzcapp/var/public:/app/public      
+        health_check:
+        test:
+            - CMD-SHELL
+            - "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health"
+        start_period: 90s
