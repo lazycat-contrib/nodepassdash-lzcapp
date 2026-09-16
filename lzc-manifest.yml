@@ -6,11 +6,10 @@ application:
   upstreams:
     - location: /
       backend: http://nodepassdash:3000/
-
 services:
   nodepassdash:
-    # upstream: ghcr.io/nodepassproject/nodepassdash:1.4.6
-    image: ghcr.io/nodepassproject/nodepassdash:1.4.6
+    # upstream: ghcr.io/nodepassproject/nodepassdash:4.0.8
+    image: registry.lazycat.cloud/czyt/nodepassproject/nodepassdash:588d0f140aefa72e
     binds:
       - /lzcapp/var/config:/app/config
       - /lzcapp/var/public:/app/public
