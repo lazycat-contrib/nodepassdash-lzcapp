@@ -1,0 +1,14 @@
+package: lazycat.community.app.nodepassdash
+version: 1.4.6
+name: NodePassDash
+description: "一个现代化的NodePass管理界面"
+min_os_version: "1.5.0"
+homepage: https://github.com/NodePassProject/NodePassDash
+author: NodePassProject
+locales:
+  zh:
+    name: NodePassDash
+    description: "一个现代化的NodePass管理界面，用于管理节点与订阅"
+  en:
+    name: NodePassDash
+    description: "A modern management UI for NodePass"

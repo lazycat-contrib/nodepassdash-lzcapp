@@ -1,0 +1,21 @@
+application:
+  subdomain: nodepassdash
+  background_task: true
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: http://nodepassdash:3000/
+
+services:
+  nodepassdash:
+    # upstream: ghcr.io/nodepassproject/nodepassdash:1.4.6
+    image: ghcr.io/nodepassproject/nodepassdash:1.4.6
+    binds:
+      - /lzcapp/var/config:/app/config
+      - /lzcapp/var/public:/app/public
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health"
+      start_period: 90s
