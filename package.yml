@@ -1,4 +1,5 @@
 package: lazycat.community.app.nodepassdash
+license: BSD-3-Clause
 version: 4.0.8
 name: NodePassDash
 description: "一个现代化的NodePass管理界面"
