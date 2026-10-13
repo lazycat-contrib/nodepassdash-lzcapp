@@ -10,11 +10,31 @@ services:
   nodepassdash:
     # upstream: ghcr.io/nodepassproject/nodepassdash:4.0.8
     image: registry.lazycat.cloud/czyt/nodepassproject/nodepassdash:588d0f140aefa72e
+    environment:
+      # 4.0.x 起：数据库配置写在 /app/db/.env；用环境变量预配置 SQLite，
+      # 让容器直接进入就绪模式，而不是停在 Setup 向导（向导期间 /api/health 返回 503）
+      - DB_DRIVER=sqlite
+      - DB_PATH=/app/db/database.db
+      - DB_WAL_MODE=true
     binds:
-      - /lzcapp/var/config:/app/config
-      - /lzcapp/var/public:/app/public
+      # 4.0.x 的数据目录是 /app/db（配置 .env 与 database.db 都在这里）
+      - /lzcapp/var/db:/app/db
+      # 日志目录（可选持久化）
+      - /lzcapp/var/logs:/app/logs
     healthcheck:
       test:
         - CMD-SHELL
         - "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health"
       start_period: 90s
+usage: |
+  NodePassDash 是 NodePass 的现代化 Web 管理界面（单容器：Go API + 内置网页）。
+
+  【首次登录】安装后直接打开应用即可，默认管理员账号：
+      用户名：nodepass
+      密码：Np123456
+  登录后请立即在界面里修改密码。
+
+  【数据】数据库与配置保存在 /lzcapp/var/db（容器内 /app/db），
+  应用升级/重装不丢失；备份时整目录拷走即可。
+
+  【说明】本应用已预配置 SQLite 并自动初始化数据库，无需手动完成初始化向导。
